@@ -11,5 +11,4 @@ public class App {
 		me = GameLogic.makePlayers(navn);
 		Application.launch(Gui.class);
 	}
-}
-;
+};

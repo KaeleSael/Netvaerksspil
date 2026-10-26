@@ -22,6 +22,9 @@ public class Gui extends Application {
 	public static Image image_floor;
 	public static Image image_wall;
 	public static Image hero_right,hero_left,hero_up,hero_down;
+	public static Image fire_right, fire_left,fire_up,fire_down;
+	public static Image fire_vertical, fire_horitontal;
+	public static Image fire_right_wall, fire_left_wall,fire_up_wall,fire_down_wall;
 
 	
 
@@ -41,8 +44,6 @@ public class Gui extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
-			
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
 			grid.setVgap(10);
@@ -99,7 +100,8 @@ public class Gui extends Application {
 				case DOWN:  playerMoved(0,+1,"down");  break;
 				case LEFT:  playerMoved(-1,0,"left");  break;
 				case RIGHT: playerMoved(+1,0,"right"); break;
-				case ESCAPE:System.exit(0); 
+				case ESCAPE:System.exit(0);
+				case SPACE: shoot(); break;
 				default: break;
 				}
 			});
@@ -156,6 +158,10 @@ public class Gui extends Application {
 	public void playerMoved(int delta_x, int delta_y, String direction) {
 		GameLogic.updatePlayer(App.me,delta_x,delta_y,direction);
 		updateScoreTable();
+	}
+
+	public void shoot(){
+		GameLogic.me.direction = direction;
 	}
 	
 	public String getScoreList() {
