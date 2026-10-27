@@ -9,6 +9,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.*;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
 public class Gui extends Application {
 
 	public static final int size = 30; 
@@ -91,10 +95,34 @@ public class Gui extends Application {
 
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 				switch (event.getCode()) {
-				case UP:    playerMoved(0,-1,"up");    break;
-				case DOWN:  playerMoved(0,+1,"down");  break;
-				case LEFT:  playerMoved(-1,0,"left");  break;
-				case RIGHT: playerMoved(+1,0,"right"); break;
+				case UP:
+                    try {
+                        playerMoved(0,-1,"up");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+				case DOWN:
+                    try {
+                        playerMoved(0,+1,"down");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+				case LEFT:
+                    try {
+                        playerMoved(-1,0,"left");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+				case RIGHT:
+                    try {
+                        playerMoved(+1,0,"right");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
 				case ESCAPE:System.exit(0); 
 				default: break;
 				}
@@ -149,9 +177,13 @@ public class Gui extends Application {
 			scoreList.setText(getScoreList());
 			});
 	}
-	public void playerMoved(int delta_x, int delta_y, String direction) {
-		GameLogic.updatePlayer(App.me,delta_x,delta_y,direction);
+	public void playerMoved(int delta_x, int delta_y, String direction) throws IOException {
+		App.outToServer.writeBytes( direction + '\n');
+
+
+		/*GameLogic.updatePlayer(App.me,delta_x,delta_y,direction);
 		updateScoreTable();
+		 */
 	}
 	
 	public String getScoreList() {

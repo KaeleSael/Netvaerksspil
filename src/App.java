@@ -1,14 +1,20 @@
 import java.io.*;
+import java.net.Socket;
 
 import javafx.application.Application;
 
 public class App {
 	public static Player me=null;
+	public static DataOutputStream outToServer;
 	public static void main(String[] args) throws Exception{
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Indtast spillernavn");
 		String navn = inFromUser.readLine();
 		me = GameLogic.makePlayers(navn);
+		Socket clientSocket= new Socket("10.10.139.11",8810);
+		outToServer = new DataOutputStream(clientSocket.getOutputStream());
+		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		outToServer.writeBytes(navn + "\n");
 		Application.launch(Gui.class);
 	}
 };
