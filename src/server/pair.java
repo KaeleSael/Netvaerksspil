@@ -1,3 +1,5 @@
+package server;
+
 public class pair {
 	int x;
 	int y;

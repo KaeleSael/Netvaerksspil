@@ -1,5 +1,8 @@
-import java.net.*;
+package server;
+
 import java.io.*;
+
+import client.Gui;
 import javafx.application.Application;
 
 public class App {
