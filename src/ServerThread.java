@@ -15,9 +15,13 @@ public class ServerThread extends Thread{
 			
 			// Do the work and the communication with the client here	
 			// The following two lines are only an example
-			
-			String clientSentence = inFromClient.readLine();
-			outToClient.writeBytes("Hej"+ c.getTekst() + '\n' );
+
+			while(true) {
+				String clientSentence = inFromClient.readLine();
+				System.out.println(clientSentence);
+			}
+
+			//outToClient.writeBytes("Hej"+ c.getTekst() + '\n' );
 		
 		} catch (IOException e) {
 			e.printStackTrace();
