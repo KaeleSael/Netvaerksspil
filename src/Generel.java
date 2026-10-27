@@ -1,5 +1,3 @@
-package server;
-
 public class Generel {
 	public static  String[] board = {    // 20x20
 			"wwwwwwwwwwwwwwwwwwww",

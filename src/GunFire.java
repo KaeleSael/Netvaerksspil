@@ -1,5 +1,3 @@
-package server;
-
 public class GunFire {
 
     pair location;

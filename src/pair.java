@@ -1,8 +1,6 @@
-package server;
-
 public class pair {
-	int x;
-	int y;
+	public int x;
+	public int y;
 	public pair(int x, int y) {
 		super();
 		this.x = x;

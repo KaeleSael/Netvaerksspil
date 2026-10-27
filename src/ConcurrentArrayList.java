@@ -1,12 +1,10 @@
-package server;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class ConcurrentArrayList implements Iterable<Player>
 {
-	private List<Player> liste = new ArrayList<Player>(); 
+	private List<Player> liste = new ArrayList<Player>();
 	
 	public void add(Player p) {
 		liste.add(p);	
@@ -29,7 +27,7 @@ public class ConcurrentArrayList implements Iterable<Player>
 		// TODO Auto-generated method stub
 		return liste.iterator();
 	}
-	/*public class ConcurrentArrayListIterator<server.Player> implements Iterator<server.Player> {
+	/*public class ConcurrentArrayListIterator<Player> implements Iterator<Player> {
 
 		@Override
 		public boolean hasNext() {
@@ -38,7 +36,7 @@ public class ConcurrentArrayList implements Iterable<Player>
 		}
 
 		@Override
-		public server.Player next() {
+		public Player next() {
 			// TODO Auto-generated method stub
 			return null;
 		}
