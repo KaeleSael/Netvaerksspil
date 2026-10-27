@@ -13,7 +13,6 @@ public class ConcurrentArrayList implements Iterable<Player>
 	public void remove(Player p) {
 		liste.remove(p);	
 	}
-	
 	public void clear() {
 		liste.clear();
 	}
