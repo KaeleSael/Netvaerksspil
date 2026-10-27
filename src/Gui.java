@@ -12,6 +12,7 @@ import javafx.scene.text.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 
 public class Gui extends Application {
 
@@ -23,12 +24,8 @@ public class Gui extends Application {
 	public static Image image_wall;
 	public static Image hero_right,hero_left,hero_up,hero_down;
 
-	
-
 	private static Label[][] fields;
-	private TextArea scoreList;
-	
-
+	private static TextArea scoreList;
 
 	
 	// -------------------------------------------
@@ -41,8 +38,6 @@ public class Gui extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
-			
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
 			grid.setVgap(10);
@@ -128,11 +123,9 @@ public class Gui extends Application {
 				}
 			});
 			
-            // Putting default players on screen
-			for (int i=0;i<GameLogic.players.size();i++) {
-			  fields[GameLogic.players.get(i).getXpos()][GameLogic.players.get(i).getYpos()].setGraphic(new ImageView(hero_up));
-			}
-			scoreList.setText(getScoreList());
+            // Putting default plaÆyers on screen
+			scoreList.setText("");
+			new ClientThread(App.inFromServer).start();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -168,15 +161,15 @@ public class Gui extends Application {
 		removePlayerOnScreen(oldpos);
 		placePlayerOnScreen(newpos,direction);
 	}
-	
 
 	
-	public void updateScoreTable()
+	public void updateScoreTable(List<Player> players)
 	{
 		Platform.runLater(() -> {
-			scoreList.setText(getScoreList());
+			scoreList.setText(getScoreList(players));
 			});
 	}
+
 	public void playerMoved(int delta_x, int delta_y, String direction) throws IOException {
 		App.outToServer.writeBytes( direction + '\n');
 
@@ -186,16 +179,52 @@ public class Gui extends Application {
 		 */
 	}
 	
-	public String getScoreList() {
+	public static String getScoreList(List<Player> players) {
 		StringBuffer b = new StringBuffer(100);
-		for (Player p : GameLogic.players) {
+		for (Player p : players) {
 			b.append(p+"\r\n");
 		}
 		return b.toString();
 	}
 
+	public static void updateFromServer(List<Player> updatedPlayers) {
+		Platform.runLater(() -> {
 
+			for (int y = 0; y < 20; y++) {
+				for (int x = 0; x < 20; x++) {
+					if (Generel.board[y].charAt(x) == ' ') {
+						fields[x][y].setGraphic(
+								new ImageView(image_floor)
+						);
+					}
+				}
+			}
+			for (Player p : updatedPlayers) {
+				int x = p.getXpos();
+				int y = p.getYpos();
 
-	
+				Image image = hero_up;
+
+				switch (p.getDirection()) {
+					case "right":
+						image = hero_right;
+						break;
+					case "left":
+						image = hero_left;
+						break;
+					case "down":
+						image = hero_down;
+						break;
+					case "up":
+						image = hero_up;
+						break;
+				}
+
+				fields[x][y].setGraphic(new ImageView(image));
+			}
+			scoreList.setText(getScoreList(updatedPlayers));
+		});
+	}
+
 }
 

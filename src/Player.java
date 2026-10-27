@@ -1,8 +1,8 @@
 public class Player {
-	String name;
-	pair location;
 	int point;
 	String direction;
+	String name;
+	pair location;
 
 	public Player(String name, pair loc, String direction) {
 		this.name = name;
@@ -43,4 +43,11 @@ public class Player {
 	public String toString() {
 		return name+":   "+point;
 	}
+	public String getName() {
+		return name;
+	}
+	public int getPoint() {
+		return point;
+	}
+
 }

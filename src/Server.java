@@ -1,4 +1,7 @@
+import java.io.DataOutputStream;
 import java.net.*;
+import java.util.ArrayList;
+
 public class Server {
 	
 	/**
@@ -8,6 +11,8 @@ public class Server {
 		int numberOfPlayers = 0;
 		int maxAntalSpillere = 4;
 		common c = new common("eksempel");
+		ArrayList<Player> players = new ArrayList<>();
+		ArrayList<DataOutputStream> clients = new ArrayList<>();
 		ServerSocket welcomeSocket = new ServerSocket(8810);
 		while (true) {
 			if (numberOfPlayers < maxAntalSpillere ){
