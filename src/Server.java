@@ -8,8 +8,11 @@ public class Server {
 		common c = new common("eksempel");
 		ServerSocket welcomeSocket = new ServerSocket(8810);
 		while (true) {
-			Socket connectionSocket = welcomeSocket.accept();
-			(new ServerThread(connectionSocket,c)).start();
+			if (numberOfPlayers < maxAntalSpillere ){
+				Socket connectionSocket = welcomeSocket.accept();
+				(new ServerThread(connectionSocket,c)).start();
+				numberOfPlayers++;
+			}
 		}
 	}
 
