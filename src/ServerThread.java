@@ -2,18 +2,16 @@ import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
 
-public class ServerThread extends Thread {
-    private final Socket connSocket;
-    private final common c;
-    private final ArrayList<Player> players;
-    private final ArrayList<DataOutputStream> clients;
-    private Player me;
-    private DataOutputStream outToClient;
+public class ServerThread extends Thread{
+	private final Socket connSocket;
+	private final ArrayList<Player> players;
+	private final ArrayList<DataOutputStream> clients;
+	private Player me;
+	private DataOutputStream outToClient;
 
-    public ServerThread(Socket connSocket, common c, ArrayList<Player> players, ArrayList<DataOutputStream> clients) {
-        this.connSocket = connSocket;
-        this.c = c; // Til Web-server opgaven skal denne ikke anvendes
-        this.players = players;
+	public ServerThread(Socket connSocket, ArrayList<Player> players, ArrayList<DataOutputStream> clients) {
+		this.connSocket = connSocket;
+		this.players = players;
         this.clients = clients;
     }
 
@@ -97,19 +95,17 @@ public class ServerThread extends Thread {
             connSocket.close();
         } catch (IOException e) {
 
-        }
-    }
+		}
+	}
+	private synchronized void sendPlayersToAll() throws IOException {
+		for (int i = clients.size() - 1; i >= 0; i--) {
+			DataOutputStream out = clients.get(i);
 
-    private synchronized void sendPlayersToAll() throws IOException {
-
-        for (int i = clients.size() - 1; i >= 0; i--) {
-            DataOutputStream out = clients.get(i);
-
-            try {
-                GameLogic.sendSpillere(players, out);
-            } catch (IOException e) {
-                clients.remove(i);
-            }
-        }
-    }
+			try {
+				GameLogic.sendSpillere(players, out);
+			} catch (IOException e) {
+				clients.remove(i);
+			}
+		}
+	}
 }

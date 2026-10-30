@@ -7,14 +7,7 @@ import java.util.Random;
 
 
 public class GameLogic {
-	
-	public static Player makePlayers(String name, List<Player> players) {
-		pair p=getRandomFreePosition(players);
-		Player me = new Player(name,p,"up");
-		players.add(me);
-		return me;
-	}
-	
+
 	public static pair getRandomFreePosition(List<Player> players)
 	// finds a random new position which is not wall 
 	// and not occupied by other players 
@@ -63,7 +56,10 @@ public class GameLogic {
 			pair newpos = new pair(x+delta_x,y+delta_y);
 			me.setLocation(newpos);
 		}
-		
+
+		if (me.getPoint() >= 150) {
+			me.setWon(true);
+		}
 		
 	}
 	
@@ -79,10 +75,9 @@ public class GameLogic {
 	public static void sendSpillere(ArrayList<Player> players, DataOutputStream outstream) throws IOException {
 		String besked = "";
 		for (Player p : players) {
-			besked +=  p.getName() + "#" + p.getXpos() + "#" + p.getYpos() + "#" + p.getDirection() + "#" + p.getPoint() + ";";
+			besked +=  p.getName() + "#" + p.getXpos() + "#" + p.getYpos() + "#" + p.getDirection() + "#" + p.getPoint() + "#" + p.getWon() + ";";
 		}
 		outstream.writeBytes(besked + "\n");
 	}
-
 
 }

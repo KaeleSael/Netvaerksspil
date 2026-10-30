@@ -3,7 +3,7 @@ import java.net.*;
 import java.util.ArrayList;
 
 public class Server {
-	
+
 	/**
 	 * @param args
 	 */
@@ -14,7 +14,10 @@ public class Server {
 		ArrayList<Player> players = new ArrayList<>();
 		ArrayList<DataOutputStream> clients = new ArrayList<>();
 		ServerSocket welcomeSocket = new ServerSocket(8810);
+
 		while (true) {
+			Socket connectionSocket = welcomeSocket.accept();
+			new ServerThread(connectionSocket, players, clients).start();
 			if (numberOfPlayers < maxAntalSpillere ){
 				Socket connectionSocket = welcomeSocket.accept();
 				(new ServerThread(connectionSocket,c,players,clients)).start();
@@ -22,4 +25,5 @@ public class Server {
 			}
 		}
 	}
+
 }
