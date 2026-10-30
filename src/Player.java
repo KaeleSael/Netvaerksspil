@@ -3,12 +3,14 @@ public class Player {
 	String direction;
 	String name;
 	pair location;
+	boolean won;
 
 	public Player(String name, pair loc, String direction) {
 		this.name = name;
 		this.location = loc;
 		this.direction = direction;
 		this.point = 0;
+		this.won = false;
 	};
 	
 	public pair getLocation() {
@@ -49,5 +51,10 @@ public class Player {
 	public int getPoint() {
 		return point;
 	}
-
+	public boolean getWon() {
+		return won;
+	}
+	public void setWon(boolean won) {
+		this.won = won;
+	}
 }

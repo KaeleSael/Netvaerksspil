@@ -26,7 +26,6 @@ public class Gui extends Application {
 
 	private static Label[][] fields;
 	private static TextArea scoreList;
-
 	
 	// -------------------------------------------
 	// | Maze: (0,0)              | Score: (1,0) |
@@ -50,7 +49,7 @@ public class Gui extends Application {
 			scoreLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
 			scoreList = new TextArea();
-			
+
 			GridPane boardGrid = new GridPane();
 
 			image_wall  = new Image(getClass().getResourceAsStream("Image/wall4.png"),size,size,false,false);
@@ -123,7 +122,7 @@ public class Gui extends Application {
 				}
 			});
 			
-            // Putting default plaÆyers on screen
+            // Putting default players on screen
 			scoreList.setText("");
 			new ClientThread(App.inFromServer).start();
 		} catch(Exception e) {
@@ -226,5 +225,14 @@ public class Gui extends Application {
 		});
 	}
 
+	public static void showWinner(String name) {
+		Platform.runLater(() -> {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("WINNER WINNER CHICKEN DINNER!!");
+			alert.setHeaderText("Tillykke!");
+			alert.setContentText(name + " har nået 150 point!");
+			alert.show();
+		});
+	}
 }
 

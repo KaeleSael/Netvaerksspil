@@ -28,7 +28,7 @@ public class ClientThread extends Thread {
 
                     String[] data = entry.split("#");
 
-                    if (data.length != 5) {
+                    if (data.length != 6) {
                         continue;
                     }
 
@@ -37,6 +37,7 @@ public class ClientThread extends Thread {
                     int y = Integer.parseInt(data[2]);
                     String direction = data[3];
                     int points = Integer.parseInt(data[4]);
+                    boolean won = Boolean.parseBoolean(data[5]);
 
                     Player player = new Player(
                             name,
@@ -46,6 +47,10 @@ public class ClientThread extends Thread {
 
                     player.addPoints(points);
                     updatedPlayers.add(player);
+
+                    if (won) {
+                        Gui.showWinner(name);
+                    }
                 }
 
                 // Opdater GUI'en med serverens data
