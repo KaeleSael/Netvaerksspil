@@ -91,33 +91,33 @@ public class Gui extends Application {
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 				switch (event.getCode()) {
 				case UP:
-                    try {
-                        playerMoved(0,-1,"up");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+					try { playerMoved(0,-1,"up");
+                    } catch (IOException e) { throw new RuntimeException(e); }
                     break;
+
 				case DOWN:
-                    try {
-                        playerMoved(0,+1,"down");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    try { playerMoved(0,+1,"down");
+                    } catch (IOException e) { throw new RuntimeException(e); }
                     break;
+
 				case LEFT:
-                    try {
-                        playerMoved(-1,0,"left");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    try { playerMoved(-1,0,"left"); }
+					catch (IOException e) { throw new RuntimeException(e); }
                     break;
+
 				case RIGHT:
-                    try {
-                        playerMoved(+1,0,"right");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    try { playerMoved(+1,0,"right"); }
+					catch (IOException e) { throw new RuntimeException(e); }
                     break;
+
+				case SPACE:
+					try {
+						playerShot("space");
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+
+
 				case ESCAPE:System.exit(0); 
 				default: break;
 				}
@@ -172,11 +172,10 @@ public class Gui extends Application {
 
 	public void playerMoved(int delta_x, int delta_y, String direction) throws IOException {
 		App.outToServer.writeBytes( direction + '\n');
+	}
 
-
-		/*GameLogic.updatePlayer(App.me,delta_x,delta_y,direction);
-		updateScoreTable();
-		 */
+	public void playerShot(String button) throws IOException {
+		App.outToServer.writeBytes(button + '\n');
 	}
 	
 	public static String getScoreList(List<Player> players) {
@@ -206,18 +205,10 @@ public class Gui extends Application {
 				Image image = hero_up;
 
 				switch (p.getDirection()) {
-					case "right":
-						image = hero_right;
-						break;
-					case "left":
-						image = hero_left;
-						break;
-					case "down":
-						image = hero_down;
-						break;
-					case "up":
-						image = hero_up;
-						break;
+					case "right": image = hero_right; break;
+					case "left": image = hero_left; break;
+					case "down": image = hero_down; break;
+					case "up": image = hero_up; break;
 				}
 
 				fields[x][y].setGraphic(new ImageView(image));
@@ -225,6 +216,5 @@ public class Gui extends Application {
 			scoreList.setText(getScoreList(updatedPlayers));
 		});
 	}
-
 }
 

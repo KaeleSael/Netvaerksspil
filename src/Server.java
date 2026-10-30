@@ -17,10 +17,9 @@ public class Server {
 		while (true) {
 			if (numberOfPlayers < maxAntalSpillere ){
 				Socket connectionSocket = welcomeSocket.accept();
-				(new ServerThread(connectionSocket,c)).start();
+				(new ServerThread(connectionSocket,c,players,clients)).start();
 				numberOfPlayers++;
 			}
 		}
 	}
-
 }
