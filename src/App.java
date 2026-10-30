@@ -13,7 +13,7 @@ public class App {
 		System.out.println("Indtast spillernavn");
 		String navn = inFromUser.readLine();
 		playerName = navn;
-		Socket clientSocket= new Socket("10.10.139.11",8810);
+		Socket clientSocket= new Socket("10.10.139.66",8810);
 		outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		outToServer.writeBytes(navn + "\n");
