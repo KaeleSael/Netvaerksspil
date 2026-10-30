@@ -53,7 +53,7 @@ public class Gui extends Application {
 
             GridPane boardGrid = new GridPane();
 
-            image_wall = new Image(getClass().getResourceAsStream("Image/wall4.png"), size, size, false, false);
+            image_wall = new Image(getClass().getResourceAsStream("Image/Stonebrick.jpg"), size, size, false, false);
             image_floor = new Image(getClass().getResourceAsStream("Image/floor1.png"), size, size, false, false);
 
             hero_right = new Image(getClass().getResourceAsStream("Image/heroRight.png"), size, size, false, false);
@@ -249,6 +249,7 @@ public class Gui extends Application {
             alert.setContentText(name + " har nået 150 point!");
             alert.show();
         });
+
     }
 }
 

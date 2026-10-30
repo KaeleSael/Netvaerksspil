@@ -69,9 +69,14 @@ public class ServerThread extends Thread{
                                 players, me, dx, dy,
                                 clientSentence.toLowerCase());
 
+                        if(me.getWon()) {
+                            sendPlayersToAll();
+                            break;
+                        }
                         sendPlayersToAll();
                     }
                 }
+
             }
 
         } catch (IOException e) {
